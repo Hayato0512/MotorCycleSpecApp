@@ -21,10 +21,14 @@ import { fetchModels } from '../../api';
 //and, in modelPIcker.jsx, if the parameter is '', return nothing, 
 // if the parameter is not '', then call fetchAPI with the make name and 
 // get the datas, and return the drop down menu.
-const ModelPicker = (fetchedModels)=>{
+const ModelPicker = (fetchedModels )=>{
+    // if you want to pass multiple data to a component like this, 
+    // just parse them as a object and deconstrutthem
     
-    var {models} = fetchedModels;
-    console.log('models is', models);
+    var {props} = fetchedModels;
+    var models  = props.models;
+    var handleModelChange = props.handleModelChange;
+    //so models here is object, how to extrace models and the function from this?? next mission.
     //これに MOdelPicker = async (make)=>{}にsルト、objects cannot be react Child になる。
     //why?? lets come back to this why later.
     if(!models){
@@ -45,7 +49,7 @@ const ModelPicker = (fetchedModels)=>{
     return(
         <FormControl>
         <p>now, please choose a model</p>
-        <NativeSelect defaultValue = '' >
+        <NativeSelect defaultValue = '' onChange = {(e)=>handleModelChange(e.target.value)}>
         <option>Select..</option>
                    {models.map((model)=><option key = {model}>{model}</option>)} 
         </NativeSelect>
@@ -66,3 +70,16 @@ export default ModelPicker;
     
 <ModelPicker make ={this.state.make}/>
 */
+
+//Now, we can specify a specific model, so get all the specs of the model, 
+//and show that in another page 
+
+//we need onChange in this modelPicker to pass the model name to somewhere, where??
+// in app.js. make handleModelChange function that get a model name as parameter.
+// and then fetch data by calling a function in api/index.js , from App.js.
+// and then set that spec as state, and then pass that to <Spec spec = {this.state.spec}/>
+//and spec.jsx recieve the spec, and show that in a card or something. or div for now.
+
+
+// ok , fucking awesome. now , we are able to pass a model name to the app.js. 
+//so, now, we want to pass that to api/index.js to fetch the spec

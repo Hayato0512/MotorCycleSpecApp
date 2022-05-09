@@ -25,6 +25,40 @@ const options2 = {
       'X-RapidAPI-Key': '723a040345msh9777641212e2f87p121c09jsn695f86c6a7e8'
     }
   };
+
+  const options4 = {
+    method: 'GET',
+    url: 'https://motorcycle-specs-database.p.rapidapi.com/make/',
+    headers: {
+      'X-RapidAPI-Host': 'motorcycle-specs-database.p.rapidapi.com',
+      'X-RapidAPI-Key': '723a040345msh9777641212e2f87p121c09jsn695f86c6a7e8'
+    }
+  };
+
+  export const fetchSpec = async (makeAndModel)=>{
+     let make = makeAndModel.make; 
+     let model = makeAndModel.model.replace(/ /g,"%20");
+    console.log('makeAndModel', make, model);
+     let urlWithMake = 'https://motorcycle-specs-database.p.rapidapi.com/make/';
+     let urlWithMakeAndModel = '';
+     if(model){
+         urlWithMakeAndModel =`${urlWithMake}${make}/model/${model}` ;
+         options4.url = urlWithMakeAndModel;
+         try {
+             const spec = await axios.request(options4);
+             console.log('returned spec looks like this', spec.data[0]);
+             return spec.data[0];
+             //ok fucking awesome. 
+             //next session, we will pass this spec data
+             // and then show that in the page. see you soon.
+             
+         } catch (error) {
+             
+         }
+
+     }
+  }
+
  export const fetchModels = async (make)=>{
 
     console.log('now, make is this in fetchModels function', make);
@@ -77,3 +111,28 @@ export const fetchData = async ()=>{
 
 }
 
+/*
+var Twit = require('twit');
+
+const T = new Twit({
+    appKey:'0RFuPKRFbQryrAYWcm0z0fw7W',
+    appSecret:'eAExm4Kzqvc1TuapK8MQwuDFUonO3fHa7jDlnSVrkXdd8i0SX1',
+    accessToken:'1200308573898604544-LDMxxzsVd8Jj0LmjC0woyBjFbs8Ve5',
+    accessSecret:'X3Ooopmd3YlScCtMcg3Lp71oOOgUKSNOYbFOoDUNV6s0n',
+
+
+})
+
+
+*/
+
+/**
+ * Twitter
+ * API key:tNOddDQtF0Soavr2SaSrgYlpo
+ * 
+ * API key secret: Rd6ClNpIoAjoM4rkZAvR4o7RaYoWxkbke2qEciGsuphDbw1uxt
+ * 
+ * 
+ * bearer token: AAAAAAAAAAAAAAAAAAAAAJKHcQEAAAAAJaKkGOBtAuRc0Sxdn9JVpkF%2BSWI%3DBIzwo60vlgzeYAAHMiuz0OOouX1YflwuEADsuHPWyxFNPybqfC
+ * 
+ */
